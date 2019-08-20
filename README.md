@@ -1,2 +1,2 @@
-# react-boilerplate
-Basic react setup with babel, webpack and basic loaders
+# react-lazy-load
+A simple implementation of the react lazy load feature
