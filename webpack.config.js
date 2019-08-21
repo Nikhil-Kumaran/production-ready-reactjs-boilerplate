@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path')
 
 let config = {
@@ -79,6 +80,9 @@ module.exports = (env, argv) => {
 
   if (argv.mode === 'development') {
     config.devtool = 'source-map';
+    config.plugins.push(new BundleAnalyzerPlugin({
+      analyzerMode: 'static'
+    }))
   }
 
   if (argv.mode === 'production') {
