@@ -9,8 +9,7 @@ let config = {
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: '/',
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].bundle.js'
+    filename: 'bundle.js',
   },
   devServer: {
     contentBase: './build',
@@ -72,6 +71,9 @@ let config = {
   plugins: [
     new HtmlWebPackPlugin({
       template: "./index.html"
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static'
     })
   ]
 };
@@ -79,14 +81,13 @@ let config = {
 module.exports = (env, argv) => {
 
   if (argv.mode === 'development') {
-    config.devtool = 'source-map';
-    config.plugins.push(new BundleAnalyzerPlugin({
-      analyzerMode: 'static'
-    }))
+    config.devtool = 'inline-source-map';
   }
 
   if (argv.mode === 'production') {
-    //...
+    config.output.filename = '[name].bundle.js'
+    config.output.chunkFilename = '[name].bundle.js'
+    config.devtool = 'source-map'
   }
 
   return config;
