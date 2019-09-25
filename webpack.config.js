@@ -85,9 +85,24 @@ module.exports = (env, argv) => {
   }
 
   if (argv.mode === 'production') {
-    config.output.filename = '[name].bundle.js'
-    config.output.chunkFilename = '[name].bundle.js'
+    config.output.filename = '[name].[chunkhash].bundle.js'
+    config.output.chunkFilename = '[name].[chunkhash].bundle.js'
     config.devtool = 'source-map'
+    config.optimization = {
+      moduleIds: 'hashed',
+      runtimeChunk: {
+        name: "manifest"
+      },
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all'
+          }
+        }
+      }
+    }
   }
 
   return config;
